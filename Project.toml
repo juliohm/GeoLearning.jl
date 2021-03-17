@@ -13,7 +13,7 @@ Tables = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
 
 [compat]
 Distributions = "0.24"
-GeoStatsBase = "0.20"
+GeoStatsBase = "0.21"
 MLJModelInterface = "0.4"
 Meshes = "0.11"
 TableOperations = "1.0"
