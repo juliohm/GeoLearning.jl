@@ -3,67 +3,67 @@
 # ------------------------------------------------------------------
 
 """
-    LearnedModel(m, θ)
+    LearnedModel(𝓂, θ)
 
 An object that stores a learning model `m`
 along with its learned parameters `θ`.
 """
-struct LearnedModel
-  model
-  θ
+struct LearnedModel{ℳ,Θ}
+  𝓂::ℳ
+  θ::Θ
 end
 
 """
-    learn(task, data, model)
+    learn(𝒯, 𝒟, 𝓂)
 
-Learn the `task` with geospatial `data`
-using a learning `model`.
+Learn the task `𝒯` with geospatial data `𝒟`
+using a learning model `𝓂`.
 """
-function learn(task::LearningTask, data, model)
+function learn(𝒯::LearningTask, 𝒟, 𝓂)
   # retrieve table of values
-  table = values(data)
+  table = values(𝒟)
 
   # learn model with table
-  if issupervised(task)
-    X = TO.select(table, features(task)...)
-    y = Tables.getcolumn(table, label(task))
-    θ, _, __ = MI.fit(model, 0, X, y)
+  if issupervised(𝒯)
+    X = TO.select(table, features(𝒯)...)
+    y = Tables.getcolumn(table, label(𝒯))
+    θ, _, __ = MI.fit(𝓂, 0, X, y)
   else
-    X = TO.select(table, features(task)...)
-    θ, _, __ = MI.fit(model, 0, X)
+    X = TO.select(table, features(𝒯)...)
+    θ, _, __ = MI.fit(𝓂, 0, X)
   end
 
   # return learned model
-  LearnedModel(model, θ)
+  LearnedModel(𝓂, θ)
 end
 
 """
-    perform(task, data, lmodel)
+    perform(𝒯, 𝒟, 𝓂̂)
 
-Perform the `task` with geospatial `data` using
-a *learned* `lmodel`.
+Perform the task `𝒯` with geospatial data `𝒟` using
+a *learned* model `𝓂̂`.
 """
-function perform(task::LearningTask, data, lmodel)
+function perform(𝒯::LearningTask, 𝒟, 𝓂̂)
   # unpack model and learned parameters
-  model, θ = lmodel.model, lmodel.θ
+  𝓂, θ = 𝓂̂.𝓂, 𝓂̂.θ
 
   # retrieve table of values
-  table = values(data)
+  table = values(𝒟)
 
   # apply model to the data
-  X = TO.select(table, features(task)...)
-  ŷ = MI.predict(model, θ, X)
+  X = TO.select(table, features(𝒯)...)
+  ŷ = MI.predict(𝓂, θ, X)
 
   # post-process result
-  var = outputvars(task)[1]
-  val = if issupervised(task)
-    isprobabilistic(model) ? mode.(ŷ) : ŷ
+  var = outputvars(𝒯)[1]
+  val = if issupervised(𝒯)
+    isprobabilistic(𝓂) ? mode.(ŷ) : ŷ
   else
     ŷ
   end
 
-  ctor = constructor(typeof(data))
-  dom  = domain(data)
+  ctor = constructor(typeof(𝒟))
+  dom  = domain(𝒟)
   tab  = (; var=>val)
   dat  = Dict(paramdim(dom) => tab)
 
