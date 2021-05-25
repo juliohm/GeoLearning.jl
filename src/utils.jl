@@ -63,5 +63,9 @@ function perform(task::LearningTask, data, lmodel)
   end
 
   ctor = constructor(typeof(data))
-  ctor(domain(data), (; var=>val))
+  dom  = domain(data)
+  tab  = (; var=>val)
+  dat  = Dict(paramdim(dom) => tab)
+
+  ctor(dom, dat)
 end
