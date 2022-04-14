@@ -25,11 +25,11 @@ function learn(𝒯::LearningTask, 𝒟, 𝓂)
 
   # learn model with table
   if issupervised(𝒯)
-    X = TO.select(table, features(𝒯)...)
+    X = table |> Select(features(𝒯))
     y = Tables.getcolumn(table, label(𝒯))
     θ, _, __ = MI.fit(𝓂, 0, X, y)
   else
-    X = TO.select(table, features(𝒯)...)
+    X = table |> Select(features(𝒯))
     θ, _, __ = MI.fit(𝓂, 0, X)
   end
 
@@ -51,7 +51,7 @@ function perform(𝒯::LearningTask, 𝒟, 𝓂̂)
   table = values(𝒟)
 
   # apply model to the data
-  X = TO.select(table, features(𝒯)...)
+  X = table |> Select(features(𝒯))
   ŷ = MI.predict(𝓂, θ, X)
 
   # post-process result

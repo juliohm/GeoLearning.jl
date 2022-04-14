@@ -8,14 +8,13 @@ using Meshes
 using GeoStatsBase
 
 using Tables
-using TableOperations
+using TableTransforms
 using MLJModelInterface
 using Distributions
 
 import GeoStatsBase: solve
 
 # aliases
-const TO = TableOperations
 const MI = MLJModelInterface
 
 include("pointwise.jl")
