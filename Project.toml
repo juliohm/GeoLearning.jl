@@ -1,7 +1,7 @@
 name = "GeoLearning"
 uuid = "90c4468e-a93e-43b4-8fb5-87d804bc629f"
 authors = ["Júlio Hoffimann <julio.hoffimann@gmail.com> and contributors"]
-version = "0.1.12"
+version = "0.1.13"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
@@ -16,6 +16,6 @@ Distributions = "0.24, 0.25"
 GeoStatsBase = "0.23, 0.24, 0.25"
 MLJModelInterface = "1.0"
 Meshes = "0.18, 0.19, 0.20, 0.21, 0.22"
-TableTransforms = "0.4"
+TableTransforms = "1.0"
 Tables = "1.4"
 julia = "1.6"
