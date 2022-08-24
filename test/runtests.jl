@@ -3,6 +3,7 @@ using Meshes
 using GeoStatsBase
 using CategoricalArrays
 using Test, Random, Plots
+using MeshPlots # TODO: replace by MeshViz
 using ReferenceTests, ImageIO
 
 # learning models from MLJ
